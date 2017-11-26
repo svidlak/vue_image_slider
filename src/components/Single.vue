@@ -1,5 +1,6 @@
 <template>
   <div>
+      Single
         <div class="main-wrapper" v-bind:style="{background: 'url('+imgData.img+') center center', backgroundSize: 'cover'}" ref="cover">
           <h3>{{imgData.title}}</h3>
           <p v-if="imgData.description">{{imgData.description}}</p>

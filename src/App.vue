@@ -1,6 +1,9 @@
 <template>
   <div id="app" v-if="ready">
-    <data-comp :imgData="currentImg" />
+    <!-- <input type="button" value="Single view" class="active" @click="slider=false"/>
+    <input type="button" value="Slider view" class="" @click="slider=true"/>
+    <single-view v-if="!slider":imgData="currentImg" /> -->
+    <slider-view v-if="slider":imgData="imagesObj" :startingPosition="position"/>
     <div class="buttons-container">
       <ul>
         <li v-for="btn in buttonsArr" :key="btn">
@@ -14,7 +17,8 @@
 </template>
 
 <script>
-import dataComp from "./components/Data"
+// import SingleView from "./components/Single"
+import SliderView from "./components/Slider"
 
 export default {
   data () {
@@ -26,10 +30,14 @@ export default {
       imagesObj: [],
       buttonsArr: [1,2,3,4,5],
       currentImg: null,
+      ///slider view///
+      slider: true,
+      position: 1,
     }
   },
   components:{
-    "data-comp": dataComp,
+    // SingleView,
+    SliderView
   },
   created(){
     this.numberRandomizer()
@@ -54,6 +62,7 @@ export default {
     shuffle(){
       this.numbersForIndex = []
       this.imagesObj = []
+      this.position = 1
       this.numberRandomizer()
       this.dataSetup()
       this.resetBtns()
@@ -69,6 +78,7 @@ export default {
       this.$refs.btns[0].className = "active"
     },
     changeImg(e, btn){
+      this.position = btn
       this.resetBtns()
       e.target.classList.toggle('active')
       this.currentImg = this.imagesObj[btn-1]
